@@ -8,9 +8,9 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "format": "prettier --config .prettierrc.js \"**/*.{ts,tsx}\" --write",
-    "prettier": "prettier --config .prettierrc.js \"**/*.{ts,tsx}\" --check",
-    "prepare": "husky install", 
+    "format": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --write",
+    "prettier": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --check",
+    "prepare": "husky install",
     "pre-commit": "npm run format && npm run lint"
   },
   "dependencies": {
@@ -24,6 +24,9 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "husky": "^8.0.3",
