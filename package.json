@@ -11,7 +11,7 @@
     "format": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --write",
     "prettier": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --check",
     "prepare": "husky install",
-    "pre-commit": "npm run format && npm run lint"
+    "pre-commit": "npm run prettier && npm run lint"
   },
   "dependencies": {
     "react": "^18.2.0",
