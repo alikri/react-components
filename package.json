@@ -8,10 +8,10 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "format": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --write",
-    "prettier": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --check",
+    "format:fix": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --write",
+    "format": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx}\" --check",
     "prepare": "husky install",
-    "pre-commit": "npm run prettier && npm run lint"
+    "pre-commit": "npm run format && npm run lint"
   },
   "dependencies": {
     "react": "^18.2.0",
