@@ -1,31 +1,53 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
+import { Component } from 'react';
+import { Search } from './components/search/Search';
+import { Results } from './components/results/Results';
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
+interface ResultItem {
+  name: string;
+  description: string;
+}
+interface AppState {
+  searchTerm: string;
+  results: ResultItem[];
+}
+
+export class App extends Component<unknown, AppState> {
+  state: AppState = {
+    searchTerm: '',
+    results: [],
+  };
+
+  updateSearchTerm = (term: string): void => {
+    this.setState({ searchTerm: term });
+  };
+
+  onInputChange = (term: string): void => {
+    console.log(term);
+  };
+
+  throwError = (): void => {
+    throw new Error('Error');
+  };
+
+  render() {
+    return (
+      <>
+        <div>
+          <Search
+            searchTerm={this.state.searchTerm}
+            onInputChange={this.onInputChange}
+            updateSearchTerm={this.updateSearchTerm}
+          />
+          <button onClick={this.throwError}>Throw Error</button>
+        </div>
+        <div>
+          <Results results={this.state.results} />
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;
