@@ -2,6 +2,7 @@ import { Component, createRef } from 'react';
 
 interface SearchProps {
   searchTerm: string;
+  causeRenderError: boolean;
   onInputChange: (term: string) => void;
   updateSearchTerm: (term: string) => void;
 }
@@ -23,6 +24,9 @@ export class Search extends Component<SearchProps> {
   };
 
   render() {
+    if (this.props.causeRenderError) {
+      throw new Error('Forced render error for testing ErrorBoundary');
+    }
     return (
       <div>
         <input ref={this.searchInput} defaultValue={this.props.searchTerm} />
