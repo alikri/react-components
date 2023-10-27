@@ -1,3 +1,5 @@
+import './search.css';
+
 import { Component, createRef } from 'react';
 
 interface SearchProps {
@@ -28,7 +30,7 @@ export class Search extends Component<SearchProps> {
       throw new Error('Forced render error for testing ErrorBoundary');
     }
     return (
-      <div>
+      <div className="search-wrapper">
         <input ref={this.searchInput} defaultValue={this.props.searchTerm} />
         <button onClick={this.handleSearch}>Search</button>
       </div>
