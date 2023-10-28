@@ -29,8 +29,7 @@ export class App extends Component<unknown, AppState> {
     this.setState({ searchTerm: term });
   };
 
-  getPokemons = async (term: string | null = null): Promise<void> => {
-    console.log(term);
+  getPokemons = async (): Promise<void> => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
     const data = await response.json();
     const results = await data.results;
@@ -44,16 +43,48 @@ export class App extends Component<unknown, AppState> {
         };
       });
       console.log(pokemonsData);
+      localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
       this.setState({ pokemons: pokemonsData });
     }
   };
 
+  getPokemon = async (term: string): Promise<void> => {
+    const nameToSearch = term.toLocaleLowerCase().trim();
+
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameToSearch}/`);
+
+    if (!response.ok) {
+      console.error('API call failed:', response.status, response.statusText);
+      return;
+    }
+
+    const pokemons: PokemonItem[] = JSON.parse(localStorage.getItem('pokemonsData') || '[]');
+
+    const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
+
+    if (matchingPokemons.length > 0) {
+      console.log(matchingPokemons, 'matching pokemons');
+      this.setState({ pokemons: matchingPokemons });
+    }
+  };
+
   componentDidMount(): void {
-    this.getPokemons();
+    const term = localStorage.getItem('searchTerm');
+    console.log(term);
+
+    if (term) {
+      this.getPokemon(term);
+    } else {
+      this.getPokemons();
+    }
   }
 
   onInputChange = async (term: string): Promise<void> => {
-    this.getPokemons(term);
+    if (term.length > 0) {
+      this.getPokemon(term);
+    } else {
+      this.getPokemons();
+    }
   };
 
   throwError = (): void => {
