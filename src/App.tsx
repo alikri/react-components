@@ -42,7 +42,7 @@ export class App extends Component<unknown, AppState> {
           image: `../src/assets/official-artwork/${index + 1}.png`,
         };
       });
-      console.log(pokemonsData);
+
       localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
       this.setState({ pokemons: pokemonsData });
     }
@@ -70,7 +70,6 @@ export class App extends Component<unknown, AppState> {
 
   componentDidMount(): void {
     const term = localStorage.getItem('searchTerm');
-    console.log(term);
 
     if (term) {
       this.getPokemon(term);
