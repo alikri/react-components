@@ -6,7 +6,6 @@ interface SearchProps {
   searchTerm: string;
   causeRenderError: boolean;
   onInputChange: (term: string) => void;
-  updateSearchTerm: (term: string) => void;
 }
 
 export class Search extends Component<SearchProps> {
@@ -14,12 +13,14 @@ export class Search extends Component<SearchProps> {
 
   componentDidMount() {
     const searchTerm = localStorage.getItem('searchTerm') || '';
-    this.props.updateSearchTerm(searchTerm.trim());
+    if (this.searchInput.current) {
+      this.searchInput.current.value = searchTerm;
+    }
   }
 
   handleSearch = () => {
     if (this.searchInput.current) {
-      const searchTerm = this.searchInput.current.value.trim() || '';
+      const searchTerm = this.searchInput.current.value.trim();
       localStorage.setItem('searchTerm', searchTerm);
       this.props.onInputChange(searchTerm);
     }

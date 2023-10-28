@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { Search } from './components/search/Search';
 import { Pokemons } from './components/pokemons/Pokemons';
 import { ErrorBoundary } from './components/error/ErrorBoundary';
+import { getPokemonsFromAPI, getPokemonByName } from './api/api';
 
 import { capitalize } from './utils/utils';
 
@@ -25,17 +26,11 @@ export class App extends Component<unknown, AppState> {
     causeRenderError: false,
   };
 
-  updateSearchTerm = (term: string): void => {
-    this.setState({ searchTerm: term });
-  };
-
   getPokemons = async (): Promise<void> => {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
-    const data = await response.json();
-    const results = await data.results;
+    const data = await await getPokemonsFromAPI();
 
-    if (results) {
-      const pokemonsData = results.map((pokemon: PokemonItem, index: number) => {
+    if (data && data.results) {
+      const pokemonsData = data.results.map((pokemon: PokemonItem, index: number) => {
         return {
           name: pokemon.name,
           description: `This is a greate Pokemon with name ${capitalize(pokemon.name)} 👻`,
@@ -50,11 +45,10 @@ export class App extends Component<unknown, AppState> {
 
   getPokemon = async (term: string): Promise<void> => {
     const nameToSearch = term.toLocaleLowerCase().trim();
+    const data = await getPokemonByName(nameToSearch);
 
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameToSearch}/`);
-
-    if (!response.ok) {
-      console.error('API call failed:', response.status, response.statusText);
+    if (!data) {
+      console.error('API call failed:');
       return;
     }
 
@@ -63,7 +57,6 @@ export class App extends Component<unknown, AppState> {
     const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
 
     if (matchingPokemons.length > 0) {
-      console.log(matchingPokemons, 'matching pokemons');
       this.setState({ pokemons: matchingPokemons });
     }
   };
@@ -79,6 +72,8 @@ export class App extends Component<unknown, AppState> {
   }
 
   onInputChange = async (term: string): Promise<void> => {
+    this.setState({ searchTerm: term });
+
     if (term.length > 0) {
       this.getPokemon(term);
     } else {
@@ -103,7 +98,6 @@ export class App extends Component<unknown, AppState> {
             causeRenderError={this.state.causeRenderError}
             searchTerm={this.state.searchTerm}
             onInputChange={this.onInputChange}
-            updateSearchTerm={this.updateSearchTerm}
           />
           <div className="error-button-wrapper">
             <button className="error-button" onClick={this.throwError}>
