@@ -18,6 +18,8 @@ interface AppState {
   searchTerm: string;
   pokemons: PokemonItem[];
   causeRenderError: boolean;
+  pokemonError: boolean;
+  pokemonsError: boolean;
   loading: boolean;
 }
 
@@ -26,45 +28,49 @@ export class App extends Component<unknown, AppState> {
     searchTerm: '',
     pokemons: [],
     causeRenderError: false,
+    pokemonError: false,
+    pokemonsError: false,
     loading: false,
   };
 
   getPokemons = async (): Promise<void> => {
-    this.setState({ loading: true });
-    const data = await getPokemonsFromAPI();
+    this.setState({ loading: true, pokemonError: false, pokemonsError: false });
+    try {
+      const data = await getPokemonsFromAPI();
 
-    if (data && data.results) {
-      const pokemonsData = data.results.map((pokemon: PokemonItem, index: number) => {
-        return {
-          name: pokemon.name,
-          description: `This is a greate Pokemon with name ${capitalize(pokemon.name)} 👻`,
-          image: `../src/assets/official-artwork/${index + 1}.png`,
-        };
-      });
+      if (data && data.results) {
+        const pokemonsData = data.results.map((pokemon: PokemonItem, index: number) => {
+          return {
+            name: pokemon.name,
+            description: `This is a greate Pokemon with name ${capitalize(pokemon.name)} 👻`,
+            image: `../src/assets/official-artwork/${index + 1}.png`,
+          };
+        });
 
-      localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
-      this.setState({ loading: false, pokemons: pokemonsData });
+        localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
+        this.setState({ loading: false, pokemons: pokemonsData });
+      } else {
+        this.setState({ loading: false, pokemonsError: true });
+      }
+    } catch {
+      this.setState({ loading: false, pokemonsError: true });
     }
   };
 
   getPokemon = async (term: string): Promise<void> => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, pokemonError: false, pokemonsError: false });
+
     const nameToSearch = term.toLocaleLowerCase().trim();
-    const data = await getPokemonByName(nameToSearch);
 
-    if (!data) {
-      console.error('API call failed:');
-      this.setState({ loading: false });
-      return;
-    }
+    try {
+      await getPokemonByName(nameToSearch);
 
-    const pokemons: PokemonItem[] = JSON.parse(localStorage.getItem('pokemonsData') || '[]');
+      const pokemons: PokemonItem[] = JSON.parse(localStorage.getItem('pokemonsData') || '[]');
+      const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
 
-    const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
-
-    if (matchingPokemons.length > 0) {
-      this.setState({ loading: false });
-      this.setState({ pokemons: matchingPokemons });
+      this.setState({ pokemons: matchingPokemons, loading: false });
+    } catch {
+      this.setState({ loading: false, pokemonError: true });
     }
   };
 
@@ -113,7 +119,15 @@ export class App extends Component<unknown, AppState> {
           </div>
         </section>
         <section className="bottom-section">
-          {this.state.loading ? <img src={LoadingImage} alt="" /> : <Pokemons pokemons={this.state.pokemons} />}
+          {this.state.loading ? (
+            <img src={LoadingImage} alt="" />
+          ) : (
+            <Pokemons
+              pokemons={this.state.pokemons}
+              pokemonError={this.state.pokemonError}
+              pokemonsError={this.state.pokemonsError}
+            />
+          )}
         </section>
       </ErrorBoundary>
     );
