@@ -31,7 +31,7 @@ export class App extends Component<unknown, AppState> {
 
   getPokemons = async (): Promise<void> => {
     this.setState({ loading: true });
-    const data = await await getPokemonsFromAPI();
+    const data = await getPokemonsFromAPI();
 
     if (data && data.results) {
       const pokemonsData = data.results.map((pokemon: PokemonItem, index: number) => {
@@ -43,8 +43,7 @@ export class App extends Component<unknown, AppState> {
       });
 
       localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
-      this.setState({ loading: false });
-      this.setState({ pokemons: pokemonsData });
+      this.setState({ loading: false, pokemons: pokemonsData });
     }
   };
 
@@ -55,6 +54,7 @@ export class App extends Component<unknown, AppState> {
 
     if (!data) {
       console.error('API call failed:');
+      this.setState({ loading: false });
       return;
     }
 
