@@ -43,7 +43,7 @@ export class App extends Component<unknown, AppState> {
           return {
             name: pokemon.name,
             description: `This is a greate Pokemon with name ${capitalize(pokemon.name)} 👻`,
-            image: `../src/assets/official-artwork/${index + 1}.png`,
+            image: `official-artwork/${index + 1}.png`,
           };
         });
 
