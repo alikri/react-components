@@ -10,6 +10,7 @@ import { getPokemonsFromAPI, getPokemonByName } from '../../api/api';
 
 import { storeInLocalStorage, loadFromLocalStorage } from '../../utils/localStorage';
 import { capitalize } from '../../utils/utils';
+import { ErrorButton } from '../errorButton/ErrorButton';
 
 interface PokemonItem {
   name: string;
@@ -99,7 +100,7 @@ export class MainContent extends Component {
     }
   };
 
-  throwError = (): void => {
+  triggerError = (): void => {
     this.setState({ causeRenderError: true });
   };
 
@@ -112,11 +113,7 @@ export class MainContent extends Component {
             searchTerm={this.state.searchTerm}
             onInputChange={this.onInputChange}
           />
-          <div className="error-button-wrapper">
-            <button className="error-button" onClick={this.throwError}>
-              Throw Error
-            </button>
-          </div>
+          <ErrorButton triggerError={this.triggerError} />
         </section>
         <section className="results-section">
           {this.state.loading ? (

@@ -1,6 +1,6 @@
 import './App.css';
 import { Component } from 'react';
-import { ErrorBoundary } from './components/error/ErrorBoundary';
+import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary';
 import { Home } from './pages/Home/Home';
 
 interface PokemonItem {
