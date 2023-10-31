@@ -6,6 +6,7 @@ import { Search } from './components/search/Search';
 import { Pokemons } from './components/pokemons/Pokemons';
 import { ErrorBoundary } from './components/error/ErrorBoundary';
 import { getPokemonsFromAPI, getPokemonByName } from './api/api';
+import { storeInLocalStorage, loadFromLocalStorage } from './utils/localStorage';
 
 import { capitalize } from './utils/utils';
 
@@ -47,7 +48,8 @@ export class App extends Component<unknown, AppState> {
           };
         });
 
-        localStorage.setItem('pokemonsData', JSON.stringify(pokemonsData));
+        storeInLocalStorage('pokemonsData', pokemonsData);
+
         this.setState({ loading: false, pokemons: pokemonsData });
       } else {
         this.setState({ loading: false, pokemonsError: true });
@@ -65,7 +67,9 @@ export class App extends Component<unknown, AppState> {
     try {
       await getPokemonByName(nameToSearch);
 
-      const pokemons: PokemonItem[] = JSON.parse(localStorage.getItem('pokemonsData') || '[]');
+      const pokemons = loadFromLocalStorage<PokemonItem[]>('pokemonsData');
+      if (!pokemons) throw new Error('pokemons are not defined');
+
       const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
 
       this.setState({ pokemons: matchingPokemons, loading: false });

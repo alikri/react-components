@@ -1,6 +1,7 @@
 import './search.css';
 
 import { Component, createRef } from 'react';
+import { loadFromLocalStorage, storeInLocalStorage } from '../../utils/localStorage';
 
 interface SearchProps {
   searchTerm: string;
@@ -12,8 +13,9 @@ export class Search extends Component<SearchProps> {
   searchInput = createRef<HTMLInputElement>();
 
   componentDidMount() {
-    const searchTerm = localStorage.getItem('searchTerm') || '';
-    if (this.searchInput.current) {
+    const searchTerm = loadFromLocalStorage<string>('searchTerm');
+
+    if (searchTerm && this.searchInput.current) {
       this.searchInput.current.value = searchTerm;
     }
   }
@@ -21,7 +23,7 @@ export class Search extends Component<SearchProps> {
   handleSearch = () => {
     if (this.searchInput.current) {
       const searchTerm = this.searchInput.current.value.trim();
-      localStorage.setItem('searchTerm', searchTerm);
+      storeInLocalStorage('searchTerm', searchTerm);
       this.props.onInputChange(searchTerm);
     }
   };
