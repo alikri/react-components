@@ -10,16 +10,6 @@ button {
   border: 1px solid black;
 }
 
-
-.top-section {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.bottom-section {
-  min-height: 580px;
-}
 .error-button-wrapper {
   align-self: flex-end;
 }

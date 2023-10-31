@@ -1,0 +1,9 @@
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.bottom-section {
+  min-height: 580px;
+}
