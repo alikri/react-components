@@ -2,7 +2,7 @@ import './mainContent.styles.css';
 
 import { Component } from 'react';
 
-import LoadingImage from '../../assets/loader.gif';
+import { Loader } from '../loader/Loader';
 
 import { Search } from '../search/Search';
 import { Pokemons } from '../pokemons/Pokemons';
@@ -120,7 +120,9 @@ export class MainContent extends Component {
         </section>
         <section className="bottom-section">
           {this.state.loading ? (
-            <img src={LoadingImage} alt="" />
+            <div className="loader-wrapper">
+              <Loader />
+            </div>
           ) : (
             <Pokemons
               pokemons={this.state.pokemons}

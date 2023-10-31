@@ -7,3 +7,7 @@
 .bottom-section {
   min-height: 580px;
 }
+
+.loader-wrapper {
+  display: flex;
+}
