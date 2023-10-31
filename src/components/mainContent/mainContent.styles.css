@@ -1,15 +1,9 @@
-.top-section {
+.search-section {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-.bottom-section {
+.results-section {
   min-height: 580px;
-}
-
-.loader-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }

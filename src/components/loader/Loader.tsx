@@ -1,3 +1,7 @@
 import './loader.styles.css';
 
-export const Loader = () => <span className="loader"></span>;
+export const Loader = () => (
+  <div className="loader-wrapper">
+    <span className="loader"></span>;
+  </div>
+);

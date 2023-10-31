@@ -106,7 +106,7 @@ export class MainContent extends Component {
   render() {
     return (
       <>
-        <section className="top-section">
+        <section className="search-section">
           <Search
             causeRenderError={this.state.causeRenderError}
             searchTerm={this.state.searchTerm}
@@ -118,11 +118,9 @@ export class MainContent extends Component {
             </button>
           </div>
         </section>
-        <section className="bottom-section">
+        <section className="results-section">
           {this.state.loading ? (
-            <div className="loader-wrapper">
-              <Loader />
-            </div>
+            <Loader />
           ) : (
             <Pokemons
               pokemons={this.state.pokemons}
