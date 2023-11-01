@@ -68,12 +68,13 @@ export class MainContent extends Component {
 
   getPokemon = async (term: string): Promise<void> => {
     this.setState({ loading: true, pokemonError: false, pokemonsError: false });
-
+    if (Number(term)) {
+      this.setState({ loading: false, pokemonError: true });
+    }
     const nameToSearch = term.toLocaleLowerCase().trim();
 
     try {
       const pokemonsFromClient = await this.api.getPokemonByName(nameToSearch);
-      console.log(pokemonsFromClient.sprites.other?.['official-artwork']['front_default']);
       const pokeImage = pokemonsFromClient.sprites.other?.['official-artwork']['front_default'];
 
       const pokemon: PokemonItem[] = [
