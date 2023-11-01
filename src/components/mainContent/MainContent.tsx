@@ -1,23 +1,24 @@
+import { Component } from 'react';
 import './mainContent.styles.css';
 
-import { Component } from 'react';
-
-import { PokemonClient, NamedAPIResourceList } from 'pokenode-ts';
-
+// Components
 import { Loader } from '../loader/Loader';
-
 import { Search } from '../search/Search';
 import { Pokemons } from '../pokemons/Pokemons';
+import { ErrorButton } from '../errorButton/ErrorButton';
 
+// Utils
+import { PokemonClient } from 'pokenode-ts';
 import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
-import { ErrorButton } from '../errorButton/ErrorButton';
+import { isConvertibleToInt } from '../../utils/utils';
 
 interface PokemonItem {
   name: string;
   description: string;
   image: string;
 }
+
 interface AppState {
   searchTerm: string;
   pokemons: PokemonItem[];
@@ -27,7 +28,7 @@ interface AppState {
   loading: boolean;
 }
 
-export class MainContent extends Component {
+export class MainContent extends Component<Record<string, never>, AppState> {
   state: AppState = {
     searchTerm: '',
     pokemons: [],
@@ -37,26 +38,21 @@ export class MainContent extends Component {
     loading: false,
   };
 
-  api: PokemonClient = new PokemonClient();
+  private api = new PokemonClient();
 
-  getPokemons = async (): Promise<void> => {
+  componentDidMount(): void {
+    const term = loadFromLocalStorage<string>('searchTerm');
+    term && term.length ? this.getPokemon(term) : this.getPokemons();
+  }
+
+  private getPokemons = async (): Promise<void> => {
     this.setState({ loading: true, pokemonError: false, pokemonsError: false });
+
     try {
-      const data: NamedAPIResourceList = await this.api.listPokemons();
+      const data = await this.api.listPokemons();
 
-      if (data && data.results) {
-        const fetchDetailsPromises: Promise<PokemonItem>[] = data.results.map(async (pokemonResult) => {
-          const pokemonDetails = await this.api.getPokemonByName(pokemonResult.name);
-          const imageUrl = pokemonDetails.sprites.other?.['official-artwork']['front_default'];
-          return {
-            name: pokemonResult.name,
-            description: `This is a great Pokemon with name ${capitalize(pokemonResult.name)} 👻`,
-            image: imageUrl || `default-image-path/${pokemonResult.name}.png`,
-          };
-        });
-
-        const pokemonsData = await Promise.all(fetchDetailsPromises);
-
+      if (data?.results) {
+        const pokemonsData = await this.fetchAllPokemons(data.results);
         this.setState({ loading: false, pokemons: pokemonsData });
       } else {
         this.setState({ loading: false, pokemonsError: true });
@@ -66,75 +62,70 @@ export class MainContent extends Component {
     }
   };
 
-  getPokemon = async (term: string): Promise<void> => {
+  private fetchAllPokemons = async (results: { name: string }[]): Promise<PokemonItem[]> => {
+    return Promise.all(
+      results.map(async ({ name }) => {
+        const pokemonDetails = await this.api.getPokemonByName(name);
+        const imageUrl = pokemonDetails.sprites.other?.['official-artwork']['front_default'];
+        return {
+          name,
+          description: `This is a great Pokemon with name ${capitalize(name)} 👻`,
+          image: imageUrl || `default-image-path/${name}.png`,
+        };
+      }),
+    );
+  };
+
+  private getPokemon = async (term: string): Promise<void> => {
     this.setState({ loading: true, pokemonError: false, pokemonsError: false });
-    if (Number(term)) {
-      this.setState({ loading: false, pokemonError: true });
+
+    if (isConvertibleToInt(term)) {
+      return this.setState({ loading: false, pokemonError: true });
     }
+
     const nameToSearch = term.toLocaleLowerCase().trim();
-
     try {
-      const pokemonsFromClient = await this.api.getPokemonByName(nameToSearch);
-      const pokeImage = pokemonsFromClient.sprites.other?.['official-artwork']['front_default'];
+      const pokemonFromClient = await this.api.getPokemonByName(nameToSearch);
+      const pokeImage = pokemonFromClient.sprites.other?.['official-artwork']['front_default'];
 
-      const pokemon: PokemonItem[] = [
-        {
-          name: nameToSearch,
-          description: `This is a greate Pokemon with name ${capitalize(term)} 👻`,
-          image: pokeImage ? pokeImage : '',
-        },
-      ];
-
-      this.setState({ pokemons: pokemon, loading: false });
+      this.setState({
+        pokemons: [
+          {
+            name: nameToSearch,
+            description: `This is a great Pokemon with name ${capitalize(term)} 👻`,
+            image: pokeImage || '',
+          },
+        ],
+        loading: false,
+      });
     } catch {
       this.setState({ loading: false, pokemonError: true });
     }
   };
 
-  componentDidMount(): void {
-    const term = loadFromLocalStorage<string>('searchTerm');
-
-    if (term && term.length !== 0) {
-      this.getPokemon(term);
-    } else {
-      this.getPokemons();
-    }
-  }
-
-  onInputChange = async (term: string): Promise<void> => {
+  private onInputChange = async (term: string): Promise<void> => {
     this.setState({ searchTerm: term });
-
-    if (term.length > 0) {
-      this.getPokemon(term);
-    } else {
-      this.getPokemons();
-    }
+    term.length ? this.getPokemon(term) : this.getPokemons();
   };
 
-  triggerError = (): void => {
+  private triggerError = (): void => {
     this.setState({ causeRenderError: true });
   };
 
   render() {
+    const { loading, searchTerm, causeRenderError, pokemons, pokemonError, pokemonsError } = this.state;
+
     return (
       <>
         <section className="search-section">
-          <Search
-            causeRenderError={this.state.causeRenderError}
-            searchTerm={this.state.searchTerm}
-            onInputChange={this.onInputChange}
-          />
+          <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={this.onInputChange} />
           <ErrorButton triggerError={this.triggerError} />
         </section>
         <section className="results-section">
-          {this.state.loading ? (
+          {loading ? (
             <Loader />
           ) : (
-            <Pokemons
-              pokemons={this.state.pokemons}
-              pokemonError={this.state.pokemonError}
-              pokemonsError={this.state.pokemonsError}
-            />
+            <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
           )}
         </section>
       </>
