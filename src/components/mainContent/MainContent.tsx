@@ -2,13 +2,14 @@ import './mainContent.styles.css';
 
 import { Component } from 'react';
 
+import { PokemonClient, NamedAPIResourceList } from 'pokenode-ts';
+
 import { Loader } from '../loader/Loader';
 
 import { Search } from '../search/Search';
 import { Pokemons } from '../pokemons/Pokemons';
-import { getPokemonsFromAPI, getPokemonByName } from '../../api/api';
 
-import { storeInLocalStorage, loadFromLocalStorage } from '../../utils/localStorage';
+import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { ErrorButton } from '../errorButton/ErrorButton';
 
@@ -36,21 +37,25 @@ export class MainContent extends Component {
     loading: false,
   };
 
+  api: PokemonClient = new PokemonClient();
+
   getPokemons = async (): Promise<void> => {
     this.setState({ loading: true, pokemonError: false, pokemonsError: false });
     try {
-      const data = await getPokemonsFromAPI();
+      const data: NamedAPIResourceList = await this.api.listPokemons();
 
       if (data && data.results) {
-        const pokemonsData = data.results.map((pokemon: PokemonItem, index: number) => {
+        const fetchDetailsPromises: Promise<PokemonItem>[] = data.results.map(async (pokemonResult) => {
+          const pokemonDetails = await this.api.getPokemonByName(pokemonResult.name);
+          const imageUrl = pokemonDetails.sprites.other?.['official-artwork']['front_default'];
           return {
-            name: pokemon.name,
-            description: `This is a greate Pokemon with name ${capitalize(pokemon.name)} 👻`,
-            image: `official-artwork/${index + 1}.png`,
+            name: pokemonResult.name,
+            description: `This is a great Pokemon with name ${capitalize(pokemonResult.name)} 👻`,
+            image: imageUrl || `default-image-path/${pokemonResult.name}.png`,
           };
         });
 
-        storeInLocalStorage('pokemonsData', pokemonsData);
+        const pokemonsData = await Promise.all(fetchDetailsPromises);
 
         this.setState({ loading: false, pokemons: pokemonsData });
       } else {
@@ -67,14 +72,19 @@ export class MainContent extends Component {
     const nameToSearch = term.toLocaleLowerCase().trim();
 
     try {
-      await getPokemonByName(nameToSearch);
+      const pokemonsFromClient = await this.api.getPokemonByName(nameToSearch);
+      console.log(pokemonsFromClient.sprites.other?.['official-artwork']['front_default']);
+      const pokeImage = pokemonsFromClient.sprites.other?.['official-artwork']['front_default'];
 
-      const pokemons = loadFromLocalStorage<PokemonItem[]>('pokemonsData');
-      if (!pokemons) throw new Error('pokemons are not defined');
+      const pokemon: PokemonItem[] = [
+        {
+          name: nameToSearch,
+          description: `This is a greate Pokemon with name ${capitalize(term)} 👻`,
+          image: pokeImage ? pokeImage : '',
+        },
+      ];
 
-      const matchingPokemons = pokemons.filter((pokemon) => pokemon.name.includes(nameToSearch));
-
-      this.setState({ pokemons: matchingPokemons, loading: false });
+      this.setState({ pokemons: pokemon, loading: false });
     } catch {
       this.setState({ loading: false, pokemonError: true });
     }

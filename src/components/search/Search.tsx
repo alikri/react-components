@@ -1,7 +1,7 @@
 import './search.css';
 
 import { Component, createRef } from 'react';
-import { loadFromLocalStorage, storeInLocalStorage } from '../../utils/localStorage';
+import { loadFromLocalStorage, storeInLocalStorage } from '../../localStorage/localStorage';
 
 interface SearchProps {
   searchTerm: string;
