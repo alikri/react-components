@@ -35,8 +35,9 @@ export const MainContent = () => {
 
   const initialPage = parseInt(searchParams.get('page') || '1', 10);
   const initialLimit = parseInt(searchParams.get('limit') || '10', 10);
+  const initialItemCount = 100;
 
-  const [totalItems, setTotalItems] = useState<number>(100);
+  const [totalItems, setTotalItems] = useState<number>(initialItemCount);
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
@@ -59,7 +60,7 @@ export const MainContent = () => {
 
     try {
       const data = await pokemonApi.listPokemons(currentOffset, limit);
-      if (totalItems === null) {
+      if (totalItems === initialItemCount) {
         setTotalItems(data.count);
       }
 
