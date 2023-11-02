@@ -1,0 +1,35 @@
+.paginator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.pagination-section,
+.limit-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.paginator button {
+  height: 30px;
+  padding: 0;
+  width: 100px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.limit-input {
+  max-width: 200px;
+  padding-block: 0;
+  height: 30px;
+}
+
+.limit-selector label {
+  font-weight: bold;
+}
