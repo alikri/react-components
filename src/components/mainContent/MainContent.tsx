@@ -74,8 +74,8 @@ export const MainContent = () => {
     setPokemonsError(false);
 
     if (isConvertibleToInt(term)) {
-      return setLoading(false);
       setPokemonError(true);
+      return setLoading(false);
     }
 
     const nameToSearch = term.toLocaleLowerCase().trim();
