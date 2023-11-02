@@ -8,7 +8,7 @@ import { Pokemons } from '../pokemons/Pokemons';
 import { ErrorButton } from '../errorButton/ErrorButton';
 
 // Utils
-import { PokemonClient } from 'pokenode-ts';
+import pokemonApi from '../../api/apiClient';
 import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
@@ -38,8 +38,6 @@ export class MainContent extends Component<Record<string, never>, AppState> {
     loading: false,
   };
 
-  private api = new PokemonClient();
-
   componentDidMount(): void {
     const term = loadFromLocalStorage<string>('searchTerm');
     term && term.length ? this.getPokemon(term) : this.getPokemons();
@@ -49,7 +47,7 @@ export class MainContent extends Component<Record<string, never>, AppState> {
     this.setState({ loading: true, pokemonError: false, pokemonsError: false });
 
     try {
-      const data = await this.api.listPokemons();
+      const data = await pokemonApi.listPokemons();
 
       if (data?.results) {
         const pokemonsData = await this.fetchAllPokemons(data.results);
@@ -65,7 +63,7 @@ export class MainContent extends Component<Record<string, never>, AppState> {
   private fetchAllPokemons = async (results: { name: string }[]): Promise<PokemonItem[]> => {
     return Promise.all(
       results.map(async ({ name }) => {
-        const pokemonDetails = await this.api.getPokemonByName(name);
+        const pokemonDetails = await pokemonApi.getPokemonByName(name);
         const imageUrl = pokemonDetails.sprites.other?.['official-artwork']['front_default'];
         return {
           name,
@@ -84,8 +82,9 @@ export class MainContent extends Component<Record<string, never>, AppState> {
     }
 
     const nameToSearch = term.toLocaleLowerCase().trim();
+
     try {
-      const pokemonFromClient = await this.api.getPokemonByName(nameToSearch);
+      const pokemonFromClient = await pokemonApi.getPokemonByName(nameToSearch);
       const pokeImage = pokemonFromClient.sprites.other?.['official-artwork']['front_default'];
 
       this.setState({
