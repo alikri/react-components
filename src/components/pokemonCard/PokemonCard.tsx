@@ -1,4 +1,4 @@
-import './pokemon.css';
+import './pokemonCard.styles.css';
 
 import { capitalize } from '../../utils/utils';
 export interface PokemonItem {
@@ -10,7 +10,7 @@ interface PokemonObject {
   pokemon: PokemonItem;
 }
 
-export const Pokemon = ({ pokemon }: PokemonObject) => {
+export const PokemonCard = ({ pokemon }: PokemonObject) => {
   return (
     <div className="pokemon-card">
       <img src={pokemon.image} alt={pokemon.name} />

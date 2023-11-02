@@ -5,16 +5,16 @@ import { useSearchParams } from 'react-router-dom';
 // Components
 import { Loader } from '../loader/Loader';
 import { Search } from '../search/Search';
-import { Pokemons } from '../pokemons/Pokemons';
+import { PokemonsList } from '../pokemonsList/PokemonsList';
 import { ErrorButton } from '../errorButton/ErrorButton';
 import { Paginator } from '../paginator/Paginator';
+import { PageLimit } from '../pageLimit/PageLimit';
 
 // Utils
 import pokemonApi from '../../api/apiClient';
 import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
-import { PageLimit } from '../pageLimit/PageLimit';
 
 interface PokemonItem {
   name: string;
@@ -145,7 +145,7 @@ export const MainContent = () => {
           <>
             <PageLimit limit={limit} onLimitChange={setLimit} />
             <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
-            <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
+            <PokemonsList pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
           </>
         )}
       </section>

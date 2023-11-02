@@ -1,6 +1,6 @@
-import './pokemons.css';
+import './pokemonsList.styles.css';
 
-import { Pokemon, PokemonItem } from '../pokemon/Pokemon';
+import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
 
 interface ResultsProps {
   pokemons: PokemonItem[];
@@ -8,7 +8,7 @@ interface ResultsProps {
   pokemonsError: boolean;
 }
 
-export const Pokemons = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
+export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
   if (pokemonError) {
     return <h2>Pokemon with this name does not exist</h2>;
   }
@@ -20,7 +20,7 @@ export const Pokemons = ({ pokemons, pokemonError, pokemonsError }: ResultsProps
   return (
     <div className="pokemons">
       {pokemons.map((pokemon, index) => (
-        <Pokemon key={`${pokemon.name}${index}`} pokemon={pokemon} />
+        <PokemonCard key={`${pokemon.name}${index}`} pokemon={pokemon} />
       ))}
     </div>
   );

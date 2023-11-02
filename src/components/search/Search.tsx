@@ -1,4 +1,4 @@
-import './search.css';
+import './search.styles.css';
 import { useEffect, useRef } from 'react';
 import { loadFromLocalStorage, storeInLocalStorage } from '../../localStorage/localStorage';
 
