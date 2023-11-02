@@ -7,6 +7,7 @@ import { Loader } from '../loader/Loader';
 import { Search } from '../search/Search';
 import { Pokemons } from '../pokemons/Pokemons';
 import { ErrorButton } from '../errorButton/ErrorButton';
+import { Pagination } from '../pagination/pagination';
 
 // Utils
 import pokemonApi from '../../api/apiClient';
@@ -32,7 +33,7 @@ export const MainContent = () => {
 
   const initialOffset = parseInt(searchParams.get('offset') || '0', 10);
   const initialLimit = parseInt(searchParams.get('limit') || '10', 10);
-  const [offset, setOffset] = useState<number>(initialOffset);
+  const [offset] = useState<number>(initialOffset);
   const [limit, setLimit] = useState<number>(initialLimit);
 
   useEffect(() => {
@@ -44,11 +45,6 @@ export const MainContent = () => {
     setSearchParams({ offset: offset.toString(), limit: limit.toString() });
     getPokemons();
   }, [offset, limit]);
-
-  // useEffect(() => {
-  //   setOffset(0);
-  //   getPokemons();
-  // }, [itemsPerPage]);
 
   const getPokemons = async (): Promise<void> => {
     setLoading(true);
@@ -125,22 +121,12 @@ export const MainContent = () => {
     setCauseRenderError(true);
   };
 
-  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLimit(Number(e.target.value));
-    setOffset(0);
-  };
-
   return (
     <>
       <section className="search-section">
         <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
         <ErrorButton triggerError={triggerError} />
-        <select value={limit} onChange={handleLimitChange}>
-          <option value="10">10 items/page</option>
-          <option value="20">20 items/page</option>
-          <option value="50">50 items/page</option>
-          {/* Add more options as required */}
-        </select>
+        <Pagination limit={limit} onLimitChange={setLimit} />
       </section>
       <section className="results-section">
         {loading ? (
