@@ -2,5 +2,6 @@
   width: 1310px;
   gap: 20px;
   display: flex;
+  flex-wrap: wrap;
   overflow: scroll;
 }

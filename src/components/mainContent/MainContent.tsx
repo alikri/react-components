@@ -142,7 +142,6 @@ export const MainContent = () => {
           <Loader />
         ) : (
           <>
-            <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
             <Paginator
               page={page}
               limit={limit}
@@ -150,6 +149,7 @@ export const MainContent = () => {
               onPageChange={setPage}
               onLimitChange={setLimit}
             />
+            <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
           </>
         )}
       </section>

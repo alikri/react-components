@@ -9,12 +9,12 @@ interface PaginatorProps {
   onLimitChange: (newLimit: number) => void;
 }
 
-export const Paginator = ({ page, limit, onPageChange, onLimitChange }: PaginatorProps) => {
+export const Paginator = ({ page, limit, totalItems, onPageChange, onLimitChange }: PaginatorProps) => {
   const MAX_ITEMS_PER_PAGE = 100;
   const [inputValue, setInputValue] = useState<string>(String(limit));
   const [error, setError] = useState<string | null>(null);
 
-  const totalPages = Math.ceil(MAX_ITEMS_PER_PAGE / limit);
+  const totalPages = Math.ceil(totalItems / limit);
 
   const handlePrevious = () => {
     if (page > 1) onPageChange(page - 1);
