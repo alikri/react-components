@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
 import './mainContent.styles.css';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 // Components
 import { Loader } from '../loader/Loader';
@@ -20,6 +21,8 @@ interface PokemonItem {
 }
 
 export const MainContent = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [pokemons, setPokemons] = useState<PokemonItem[]>([]);
   const [causeRenderError, setCauseRenderError] = useState<boolean>(false);
@@ -27,10 +30,25 @@ export const MainContent = () => {
   const [pokemonsError, setPokemonsError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const initialOffset = parseInt(searchParams.get('offset') || '0', 10);
+  const initialLimit = parseInt(searchParams.get('limit') || '10', 10);
+  const [offset, setOffset] = useState<number>(initialOffset);
+  const [limit, setLimit] = useState<number>(initialLimit);
+
   useEffect(() => {
     const term = loadFromLocalStorage<string>('searchTerm');
     term && term.length ? getPokemon(term) : getPokemons();
   }, []);
+
+  useEffect(() => {
+    setSearchParams({ offset: offset.toString(), limit: limit.toString() });
+    getPokemons();
+  }, [offset, limit]);
+
+  // useEffect(() => {
+  //   setOffset(0);
+  //   getPokemons();
+  // }, [itemsPerPage]);
 
   const getPokemons = async (): Promise<void> => {
     setLoading(true);
@@ -38,7 +56,7 @@ export const MainContent = () => {
     setPokemonsError(false);
 
     try {
-      const data = await pokemonApi.listPokemons();
+      const data = await pokemonApi.listPokemons(offset, limit);
 
       if (data?.results) {
         const pokemonsData = await fetchAllPokemons(data.results);
@@ -107,11 +125,22 @@ export const MainContent = () => {
     setCauseRenderError(true);
   };
 
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimit(Number(e.target.value));
+    setOffset(0);
+  };
+
   return (
     <>
       <section className="search-section">
         <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
         <ErrorButton triggerError={triggerError} />
+        <select value={limit} onChange={handleLimitChange}>
+          <option value="10">10 items/page</option>
+          <option value="20">20 items/page</option>
+          <option value="50">50 items/page</option>
+          {/* Add more options as required */}
+        </select>
       </section>
       <section className="results-section">
         {loading ? (

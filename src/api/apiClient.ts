@@ -7,8 +7,8 @@ class PokemonApiClient {
     this.client = new PokemonClient();
   }
 
-  async listPokemons() {
-    return await this.client.listPokemons();
+  async listPokemons(offset: number, limit: number) {
+    return await this.client.listPokemons(offset, limit);
   }
 
   async getPokemonByName(name: string) {
