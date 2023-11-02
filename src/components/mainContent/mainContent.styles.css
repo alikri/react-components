@@ -8,3 +8,18 @@
 .results-section {
   min-height: 580px;
 }
+
+.main-content-container {
+  display: flex;
+}
+
+.left-panel {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.right-panel {
+  width: 50%;
+  border-left: 1px solid #ccc;
+  overflow-y: auto;
+}

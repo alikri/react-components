@@ -1,6 +1,6 @@
 import './mainContent.styles.css';
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 // Components
 import { Loader } from '../loader/Loader';
@@ -133,22 +133,33 @@ export const MainContent = () => {
   };
 
   return (
-    <>
-      <section className="search-section">
-        <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
-        <ErrorButton triggerError={triggerError} />
+    <div className="main-content-container">
+      <section className="left-panel">
+        <section className="search-section">
+          <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
+          <ErrorButton triggerError={triggerError} />
+        </section>
+        <section className="results-section">
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <PageLimit limit={limit} onLimitChange={setLimit} />
+              <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
+              <PokemonsList
+                pokemons={pokemons}
+                pokemonError={pokemonError}
+                pokemonsError={pokemonsError}
+                currentPage={page}
+              />
+            </>
+          )}
+        </section>
       </section>
-      <section className="results-section">
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <PageLimit limit={limit} onLimitChange={setLimit} />
-            <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
-            <PokemonsList pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
-          </>
-        )}
+
+      <section className="right-panel">
+        <Outlet />
       </section>
-    </>
+    </div>
   );
 };

@@ -6,6 +6,7 @@ interface ResultsProps {
   pokemons: PokemonItem[];
   pokemonError: boolean;
   pokemonsError: boolean;
+  currentPage: number;
 }
 
 export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
