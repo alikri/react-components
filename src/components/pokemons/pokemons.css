@@ -1,0 +1,6 @@
+.pokemons {
+  width: 1310px;
+  gap: 20px;
+  display: flex;
+  overflow: scroll;
+}

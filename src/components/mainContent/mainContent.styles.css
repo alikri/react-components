@@ -1,0 +1,9 @@
+.search-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.results-section {
+  min-height: 580px;
+}
