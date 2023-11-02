@@ -8,6 +8,7 @@ interface ErrorBoundaryProps {
   children: ReactNode;
   onResetError?: () => void;
 }
+
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
