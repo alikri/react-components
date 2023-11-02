@@ -14,6 +14,7 @@ import pokemonApi from '../../api/apiClient';
 import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
+import { PageLimit } from '../pageLimit/PageLimit';
 
 interface PokemonItem {
   name: string;
@@ -142,13 +143,8 @@ export const MainContent = () => {
           <Loader />
         ) : (
           <>
-            <Paginator
-              page={page}
-              limit={limit}
-              totalItems={totalItems}
-              onPageChange={setPage}
-              onLimitChange={setLimit}
-            />
+            <PageLimit limit={limit} onLimitChange={setLimit} />
+            <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
             <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
           </>
         )}

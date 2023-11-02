@@ -5,8 +5,7 @@
   gap: 30px;
 }
 
-.pagination-section,
-.limit-selector {
+.pagination-section {
   display: flex;
   align-items: center;
   gap: 10px;
