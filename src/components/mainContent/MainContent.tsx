@@ -7,7 +7,7 @@ import { Loader } from '../loader/Loader';
 import { Search } from '../search/Search';
 import { Pokemons } from '../pokemons/Pokemons';
 import { ErrorButton } from '../errorButton/ErrorButton';
-import { Pagination } from '../pagination/pagination';
+import { Paginator } from '../paginator/Paginator';
 
 // Utils
 import pokemonApi from '../../api/apiClient';
@@ -26,14 +26,18 @@ export const MainContent = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [pokemons, setPokemons] = useState<PokemonItem[]>([]);
+
   const [causeRenderError, setCauseRenderError] = useState<boolean>(false);
   const [pokemonError, setPokemonError] = useState<boolean>(false);
   const [pokemonsError, setPokemonsError] = useState<boolean>(false);
+
   const [loading, setLoading] = useState<boolean>(false);
 
-  const initialOffset = parseInt(searchParams.get('offset') || '0', 10);
+  const initialPage = parseInt(searchParams.get('page') || '1', 10);
   const initialLimit = parseInt(searchParams.get('limit') || '10', 10);
-  const [offset] = useState<number>(initialOffset);
+
+  const [totalItems, setTotalItems] = useState<number>(100);
+  const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
   useEffect(() => {
@@ -42,17 +46,22 @@ export const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    setSearchParams({ offset: offset.toString(), limit: limit.toString() });
+    setSearchParams({ page: page.toString(), limit: limit.toString() });
     getPokemons();
-  }, [offset, limit]);
+  }, [page, limit]);
 
   const getPokemons = async (): Promise<void> => {
     setLoading(true);
     setPokemonError(false);
     setPokemonsError(false);
 
+    const currentOffset = (page - 1) * limit;
+
     try {
-      const data = await pokemonApi.listPokemons(offset, limit);
+      const data = await pokemonApi.listPokemons(currentOffset, limit);
+      if (totalItems === null) {
+        setTotalItems(data.count);
+      }
 
       if (data?.results) {
         const pokemonsData = await fetchAllPokemons(data.results);
@@ -126,13 +135,21 @@ export const MainContent = () => {
       <section className="search-section">
         <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
         <ErrorButton triggerError={triggerError} />
-        <Pagination limit={limit} onLimitChange={setLimit} />
       </section>
       <section className="results-section">
         {loading ? (
           <Loader />
         ) : (
-          <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
+          <>
+            <Pokemons pokemons={pokemons} pokemonError={pokemonError} pokemonsError={pokemonsError} />
+            <Paginator
+              page={page}
+              limit={limit}
+              totalItems={totalItems}
+              onPageChange={setPage}
+              onLimitChange={setLimit}
+            />
+          </>
         )}
       </section>
     </>
