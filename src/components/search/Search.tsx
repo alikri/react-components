@@ -1,6 +1,5 @@
 import './search.css';
-
-import { Component, createRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { loadFromLocalStorage, storeInLocalStorage } from '../../localStorage/localStorage';
 
 interface SearchProps {
@@ -9,34 +8,33 @@ interface SearchProps {
   onInputChange: (term: string) => void;
 }
 
-export class Search extends Component<SearchProps> {
-  searchInput = createRef<HTMLInputElement>();
+export const Search = ({ searchTerm, causeRenderError, onInputChange }: SearchProps) => {
+  const searchInput = useRef<HTMLInputElement>(null);
 
-  componentDidMount() {
-    const searchTerm = loadFromLocalStorage<string>('searchTerm');
+  useEffect(() => {
+    const storedSearchTerm = loadFromLocalStorage<string>('searchTerm');
 
-    if (searchTerm && this.searchInput.current) {
-      this.searchInput.current.value = searchTerm;
+    if (storedSearchTerm && searchInput.current) {
+      searchInput.current.value = storedSearchTerm;
     }
-  }
+  }, []);
 
-  handleSearch = () => {
-    if (this.searchInput.current) {
-      const searchTerm = this.searchInput.current.value.trim();
-      storeInLocalStorage('searchTerm', searchTerm);
-      this.props.onInputChange(searchTerm);
+  const handleSearch = () => {
+    if (searchInput.current) {
+      const searchTermValue = searchInput.current.value.trim();
+      storeInLocalStorage('searchTerm', searchTermValue);
+      onInputChange(searchTermValue);
     }
   };
 
-  render() {
-    if (this.props.causeRenderError) {
-      throw new Error('Forced render error for testing ErrorBoundary');
-    }
-    return (
-      <div className="search-wrapper">
-        <input ref={this.searchInput} defaultValue={this.props.searchTerm} />
-        <button onClick={this.handleSearch}>Search</button>
-      </div>
-    );
+  if (causeRenderError) {
+    throw new Error('Forced render error for testing ErrorBoundary');
   }
-}
+
+  return (
+    <div className="search-wrapper">
+      <input ref={searchInput} defaultValue={searchTerm} />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
+};
