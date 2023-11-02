@@ -6,6 +6,13 @@
   background-color: white;
   border-radius: 10px;
   margin-block: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.pokemon-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
 }
 
 .pokemon-card img {
