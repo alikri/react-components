@@ -19,7 +19,7 @@ interface PokemonItem {
   image: string;
 }
 
-const MainContent = () => {
+export const MainContent = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [pokemons, setPokemons] = useState<PokemonItem[]>([]);
   const [causeRenderError, setCauseRenderError] = useState<boolean>(false);
@@ -123,5 +123,3 @@ const MainContent = () => {
     </>
   );
 };
-
-export default MainContent;

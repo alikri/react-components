@@ -1,26 +1,21 @@
 import './pokemon.css';
 
-import { Component } from 'react';
 import { capitalize } from '../../utils/utils';
-
-interface PokemonItem {
+export interface PokemonItem {
   name: string;
-  description: string;
   image: string;
+  description: string;
 }
-
 interface PokemonObject {
   pokemon: PokemonItem;
 }
 
-export class Pokemon extends Component<PokemonObject> {
-  render() {
-    return (
-      <div className="pokemon-card">
-        <img src={this.props.pokemon.image} alt={this.props.pokemon.name} />
-        <h2>{capitalize(this.props.pokemon.name)}</h2>
-        <p>{this.props.pokemon.description}</p>
-      </div>
-    );
-  }
-}
+export const Pokemon = ({ pokemon }: PokemonObject) => {
+  return (
+    <div className="pokemon-card">
+      <img src={pokemon.image} alt={pokemon.name} />
+      <h2>{capitalize(pokemon.name)}</h2>
+      <p>{pokemon.description}</p>
+    </div>
+  );
+};
