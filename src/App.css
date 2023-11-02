@@ -17,16 +17,14 @@ button {
 .error-button {
   color: rgba(255, 0, 0, 0.88);
   border-color: rgba(255, 0, 0, 0.88);
-  transition: all .2 linear;
+  transition: all 0.2 linear;
 }
 
 .error-button:hover {
   color: rgb(145, 17, 17);
   border-color: rgb(145, 17, 17);
-  
 }
 
 .error-button:active {
-  box-shadow: 10px rgb(145, 17, 17);;
-
+  box-shadow: 10px rgb(145, 17, 17);
 }

@@ -45,7 +45,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all .2s linear;
+  transition: all 0.2s linear;
 
   background-color: #ffffff;
   border-color: #d9d9d9;
@@ -56,7 +56,6 @@ button {
 button:hover {
   color: rgb(16, 16, 16);
   border-color: rgb(16, 16, 16);
-
 }
 
 input {
