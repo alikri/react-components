@@ -46,9 +46,17 @@ export const MainContent = () => {
   const [limit, setLimit] = useState<number>(initialLimit);
 
   const context = useContext(RightSideContext);
-  const { rightSide, hideRightSide } = context;
+  const { rightSide, hideRightSide, showRightSide } = context;
 
   useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    if (currentPath !== '/') {
+      showRightSide();
+    } else {
+      hideRightSide();
+    }
+
     const term = loadFromLocalStorage<string>('searchTerm');
     term && term.length ? getPokemon(term) : getPokemons();
   }, []);
