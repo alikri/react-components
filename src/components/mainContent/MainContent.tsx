@@ -16,7 +16,7 @@ import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
 import { RightSideContext } from '../../context/context';
-import { DEFAULT_PAGE } from '../../constants/constants';
+import { DEFAULT_PAGE, INTIAL_ITEM_COUNT } from '../../constants/constants';
 
 interface PokemonItem {
   name: string;
@@ -40,9 +40,8 @@ export const MainContent = () => {
 
   const initialPage = parseInt(searchParams.get('page') || '1', 10);
   const initialLimit = parseInt(searchParams.get('limit') || '10', 10);
-  const initialItemCount = 100;
 
-  const [totalItems, setTotalItems] = useState<number>(initialItemCount);
+  const [totalItems, setTotalItems] = useState<number>(INTIAL_ITEM_COUNT);
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
@@ -76,21 +75,20 @@ export const MainContent = () => {
 
     try {
       const data = await pokemonApi.listPokemons(currentOffset, limit);
-      if (totalItems === initialItemCount) {
+      if (totalItems === INTIAL_ITEM_COUNT) {
         setTotalItems(data.count);
       }
 
       if (data?.results) {
         const pokemonsData = await fetchAllPokemons(data.results);
-        setLoading(false);
         setPokemons(pokemonsData);
       } else {
-        setLoading(false);
         setPokemonsError(true);
       }
     } catch {
-      setLoading(false);
       setPokemonsError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
