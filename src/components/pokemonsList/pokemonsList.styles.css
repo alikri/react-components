@@ -10,6 +10,6 @@
   width: 100%;
   margin-inline: 10px;
   justify-content: center;
-  max-height: calc(100vh - 210px);
+  max-height: calc(100vh - 250px);
   overflow-y: scroll;
 }

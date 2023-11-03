@@ -1,3 +1,4 @@
+import './errorButton.styles.css';
 interface ErrorButtonProps {
   triggerError: () => void;
 }
