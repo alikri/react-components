@@ -12,3 +12,45 @@
     transform 0.3s ease;
   text-align: center;
 }
+
+.pokemon-details h2 {
+  margin-bottom: 10px;
+}
+
+.pokemon-details p {
+  margin-top: 0px;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.abilities-container,
+.types-container,
+.body-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.abilities-container h3,
+.types-container h3,
+.body-container h3 {
+  margin: 0px;
+  margin-left: 20px;
+}
+
+.abilities-container ul,
+.types-container ul,
+.body-container ul {
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.abilities-container ul li,
+.types-container ul li,
+.body-container ul li {
+  text-align: start;
+}

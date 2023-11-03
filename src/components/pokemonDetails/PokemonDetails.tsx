@@ -23,6 +23,7 @@ export const PokemonDetails = () => {
       if (nameToSearch) {
         try {
           const data = await pokemonApi.getPokemonByName(nameToSearch);
+          console.log(data);
           setPokemonDetails(data);
           setLoading(false);
         } catch {
