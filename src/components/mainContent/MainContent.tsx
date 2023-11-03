@@ -138,7 +138,7 @@ export const MainContent = () => {
 
   const handleLeftSideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
-    if (!target.closest('.pokemon-card')) {
+    if (target.closest('.left-panel') && !target.closest('.pokemon-card')) {
       hideRightSide();
     }
   };
