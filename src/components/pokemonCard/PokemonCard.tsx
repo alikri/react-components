@@ -3,6 +3,8 @@ import './pokemonCard.styles.css';
 import { useNavigate } from 'react-router-dom';
 
 import { capitalize } from '../../utils/utils';
+import { RightSideContext } from '../../context/context';
+import { useContext } from 'react';
 export interface PokemonItem {
   name: string;
   image: string;
@@ -10,15 +12,16 @@ export interface PokemonItem {
 }
 interface PokemonObject {
   pokemon: PokemonItem;
-  rightSide: boolean;
-  setRightSide: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PokemonCard = ({ pokemon, setRightSide, rightSide }: PokemonObject) => {
+export const PokemonCard = ({ pokemon }: PokemonObject) => {
+  const context = useContext(RightSideContext);
+  const { rightSide, showRightSide } = context;
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/details-${pokemon.name}`);
-    setRightSide(true);
+    showRightSide(true);
   };
 
   return (

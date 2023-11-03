@@ -1,17 +1,20 @@
 import './pokemonsList.styles.css';
 
 import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
+import { RightSideContext } from '../../context/context';
+import { useContext } from 'react';
 
 interface ResultsProps {
   pokemons: PokemonItem[];
   pokemonError: boolean;
   pokemonsError: boolean;
   currentPage: number;
-  rightSide: boolean;
-  setRightSide: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PokemonsList = ({ pokemons, pokemonError, pokemonsError, setRightSide, rightSide }: ResultsProps) => {
+export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
+  const context = useContext(RightSideContext);
+  const { rightSide } = context;
+
   if (pokemonError) {
     return <h2>Pokemon with this name does not exist</h2>;
   }
@@ -23,12 +26,7 @@ export const PokemonsList = ({ pokemons, pokemonError, pokemonsError, setRightSi
   return (
     <div className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
       {pokemons.map((pokemon, index) => (
-        <PokemonCard
-          key={`${pokemon.name}${index}`}
-          pokemon={pokemon}
-          rightSide={rightSide}
-          setRightSide={setRightSide}
-        />
+        <PokemonCard key={`${pokemon.name}${index}`} pokemon={pokemon} />
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
 import './mainContent.styles.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 
 // Components
@@ -15,6 +15,7 @@ import pokemonApi from '../../api/apiClient';
 import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
+import { RightSideContext } from '../../context/context';
 
 interface PokemonItem {
   name: string;
@@ -42,7 +43,10 @@ export const MainContent = () => {
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
-  const [rightSide, setRightSide] = useState<boolean>(false);
+  // const [rightSide, setRightSide] = useState<boolean>(false);
+
+  const context = useContext(RightSideContext);
+  const { rightSide } = context;
 
   useEffect(() => {
     const term = loadFromLocalStorage<string>('searchTerm');
@@ -153,8 +157,6 @@ export const MainContent = () => {
                 pokemonError={pokemonError}
                 pokemonsError={pokemonsError}
                 currentPage={page}
-                rightSide={rightSide}
-                setRightSide={setRightSide}
               />
             </>
           )}

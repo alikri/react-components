@@ -2,15 +2,19 @@ import { useState, createContext } from 'react';
 
 interface RightSideContextType {
   rightSide: boolean;
-  hideRightSide: () => void;
-  showRightSide: () => void;
+  hideRightSide: (value: boolean) => void;
+  showRightSide: (value: boolean) => void;
 }
 
 interface RightSideProviderProps {
   children: React.ReactNode;
 }
 
-const RightSideContext = createContext<RightSideContextType | undefined>(undefined);
+export const RightSideContext = createContext<RightSideContextType>({
+  rightSide: false,
+  hideRightSide: () => {},
+  showRightSide: () => {},
+});
 
 export const RightSideProvider = ({ children }: RightSideProviderProps) => {
   const [rightSide, setRightSide] = useState<boolean>(false);
