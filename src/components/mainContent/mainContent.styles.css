@@ -24,6 +24,7 @@
 .right-panel {
   width: 50%;
   border-left: 1px solid #ccc;
+  margin-block: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
