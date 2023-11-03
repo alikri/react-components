@@ -7,6 +7,9 @@
 
 .results-section {
   min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .main-content-container {

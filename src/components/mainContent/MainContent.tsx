@@ -42,6 +42,8 @@ export const MainContent = () => {
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
+  const [rightSide, setRightSide] = useState<boolean>(false);
+
   useEffect(() => {
     const term = loadFromLocalStorage<string>('searchTerm');
     term && term.length ? getPokemon(term) : getPokemons();
@@ -151,15 +153,18 @@ export const MainContent = () => {
                 pokemonError={pokemonError}
                 pokemonsError={pokemonsError}
                 currentPage={page}
+                rightSide={rightSide}
+                setRightSide={setRightSide}
               />
             </>
           )}
         </section>
       </section>
-
-      <section className="right-panel">
-        <Outlet />
-      </section>
+      {rightSide && (
+        <section className="right-panel">
+          <Outlet />
+        </section>
+      )}
     </div>
   );
 };

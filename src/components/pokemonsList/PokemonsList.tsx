@@ -7,9 +7,11 @@ interface ResultsProps {
   pokemonError: boolean;
   pokemonsError: boolean;
   currentPage: number;
+  rightSide: boolean;
+  setRightSide: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
+export const PokemonsList = ({ pokemons, pokemonError, pokemonsError, setRightSide, rightSide }: ResultsProps) => {
   if (pokemonError) {
     return <h2>Pokemon with this name does not exist</h2>;
   }
@@ -19,9 +21,14 @@ export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsP
   }
 
   return (
-    <div className="pokemons">
+    <div className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
       {pokemons.map((pokemon, index) => (
-        <PokemonCard key={`${pokemon.name}${index}`} pokemon={pokemon} />
+        <PokemonCard
+          key={`${pokemon.name}${index}`}
+          pokemon={pokemon}
+          rightSide={rightSide}
+          setRightSide={setRightSide}
+        />
       ))}
     </div>
   );
