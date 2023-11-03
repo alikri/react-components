@@ -4,9 +4,10 @@ import { useState } from 'react';
 interface PageLimitProps {
   limit: number;
   onLimitChange: (newLimit: number) => void;
+  onPageReset: () => void;
 }
 
-export const PageLimit = ({ limit, onLimitChange }: PageLimitProps) => {
+export const PageLimit = ({ limit, onLimitChange, onPageReset }: PageLimitProps) => {
   const MAX_ITEMS_PER_PAGE = 100;
   const [inputValue, setInputValue] = useState<string>(String(limit));
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +26,7 @@ export const PageLimit = ({ limit, onLimitChange }: PageLimitProps) => {
     }
 
     setError(null);
+    onPageReset();
     onLimitChange(newLimit);
   };
 

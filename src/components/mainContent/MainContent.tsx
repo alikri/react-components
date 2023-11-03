@@ -171,7 +171,7 @@ export const MainContent = () => {
             <Loader />
           ) : (
             <>
-              <PageLimit limit={limit} onLimitChange={setLimit} />
+              <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(1)} />
               <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
               <PokemonsList
                 pokemons={pokemons}
