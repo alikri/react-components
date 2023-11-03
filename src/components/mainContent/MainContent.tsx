@@ -16,6 +16,7 @@ import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { capitalize } from '../../utils/utils';
 import { isConvertibleToInt } from '../../utils/utils';
 import { RightSideContext } from '../../context/context';
+import { DEFAULT_PAGE } from '../../constants/constants';
 
 interface PokemonItem {
   name: string;
@@ -171,7 +172,7 @@ export const MainContent = () => {
             <Loader />
           ) : (
             <>
-              <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(1)} />
+              <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(DEFAULT_PAGE)} />
               <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
               <PokemonsList
                 pokemons={pokemons}

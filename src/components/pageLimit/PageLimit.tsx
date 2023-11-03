@@ -1,6 +1,8 @@
 import './pageLimit.styles.css';
 import { useState } from 'react';
 
+import { MAX_ITEMS_PER_PAGE } from '../../constants/constants';
+
 interface PageLimitProps {
   limit: number;
   onLimitChange: (newLimit: number) => void;
@@ -8,7 +10,6 @@ interface PageLimitProps {
 }
 
 export const PageLimit = ({ limit, onLimitChange, onPageReset }: PageLimitProps) => {
-  const MAX_ITEMS_PER_PAGE = 100;
   const [inputValue, setInputValue] = useState<string>(String(limit));
   const [error, setError] = useState<string | null>(null);
 

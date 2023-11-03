@@ -1,7 +1,7 @@
 import './App.css';
 import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary';
 import { PokemonDetails } from './components/pokemonDetails/PokemonDetails';
-import { Home } from './pages/Home/Home';
+import { Home } from './pages/Home';
 
 //react=router imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
