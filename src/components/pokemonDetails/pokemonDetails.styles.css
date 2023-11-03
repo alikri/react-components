@@ -30,30 +30,46 @@
 
 .abilities-container,
 .types-container,
-.body-container {
+.body-container,
+.additional-info-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
+.additional-info-container {
+  align-items: center;
+}
+
 .abilities-container h3,
 .types-container h3,
-.body-container h3 {
+.body-container h3,
+.additional-info-container h3 {
   margin: 0px;
   margin-left: 20px;
 }
 
 .abilities-container ul,
 .types-container ul,
-.body-container ul {
+.body-container ul,
+.additional-info-container ul {
   margin: 0px;
   margin-bottom: 20px;
 }
 
 .abilities-container ul li,
 .types-container ul li,
-.body-container ul li {
+.body-container ul li,
+.additional-info-container ul li {
   text-align: start;
+}
+
+.additional-info-container ul li {
+  list-style: none;
+}
+
+.bold-text {
+  font-weight: bold;
 }
 
 .close-button {

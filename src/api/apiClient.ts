@@ -14,6 +14,10 @@ class PokemonApiClient {
   async getPokemonByName(name: string) {
     return await this.client.getPokemonByName(name);
   }
+
+  async getPokemonDetails(name: string) {
+    return await this.client.getPokemonSpeciesByName(name);
+  }
 }
 
 const pokemonApi = new PokemonApiClient();
