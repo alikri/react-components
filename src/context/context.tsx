@@ -2,8 +2,8 @@ import { useState, createContext } from 'react';
 
 interface RightSideContextType {
   rightSide: boolean;
-  hideRightSide: (value: boolean) => void;
-  showRightSide: (value: boolean) => void;
+  hideRightSide: () => void;
+  showRightSide: () => void;
 }
 
 interface RightSideProviderProps {

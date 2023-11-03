@@ -21,7 +21,7 @@ export const PokemonCard = ({ pokemon }: PokemonObject) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/details-${pokemon.name}`);
-    showRightSide(true);
+    showRightSide();
   };
 
   return (

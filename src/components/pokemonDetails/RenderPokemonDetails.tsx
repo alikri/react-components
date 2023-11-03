@@ -15,7 +15,7 @@ const RenderPokemonDetails = ({ pokemonDetails }: PokemonDetailsProps) => {
   const { hideRightSide } = context;
 
   const closeRightSection = () => {
-    hideRightSide(false);
+    hideRightSide();
   };
 
   return (

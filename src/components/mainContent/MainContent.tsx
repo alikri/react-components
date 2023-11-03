@@ -44,7 +44,7 @@ export const MainContent = () => {
   const [limit, setLimit] = useState<number>(initialLimit);
 
   const context = useContext(RightSideContext);
-  const { rightSide } = context;
+  const { rightSide, hideRightSide } = context;
 
   useEffect(() => {
     const term = loadFromLocalStorage<string>('searchTerm');
@@ -136,8 +136,15 @@ export const MainContent = () => {
     setCauseRenderError(true);
   };
 
+  const handleLeftSideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('.pokemon-card')) {
+      hideRightSide();
+    }
+  };
+
   return (
-    <div className="main-content-container">
+    <div className="main-content-container" onClick={(e) => handleLeftSideClick(e)}>
       <section className="left-panel">
         <section className="search-section">
           <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
