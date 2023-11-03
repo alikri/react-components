@@ -154,11 +154,11 @@ export const MainContent = () => {
   return (
     <div className="main-content-container" onClick={(e) => handleLeftSideClick(e)}>
       <section className="left-panel">
-        <section className="search-section">
+        <div className="search-section">
           <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
           <ErrorButton triggerError={triggerError} />
-        </section>
-        <section className="results-section">
+        </div>
+        <div className="results-section">
           {loading ? (
             <Loader />
           ) : (
@@ -173,7 +173,7 @@ export const MainContent = () => {
               />
             </>
           )}
-        </section>
+        </div>
       </section>
       {rightSide && (
         <section className="right-panel">
