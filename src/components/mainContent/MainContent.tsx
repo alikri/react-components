@@ -43,8 +43,6 @@ export const MainContent = () => {
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
 
-  // const [rightSide, setRightSide] = useState<boolean>(false);
-
   const context = useContext(RightSideContext);
   const { rightSide } = context;
 

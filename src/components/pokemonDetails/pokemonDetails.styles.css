@@ -1,4 +1,5 @@
 .pokemon-details {
+  position: relative;
   box-shadow:
     0 1px 2px 0 rgba(0, 0, 0, 0.03),
     0 1px 6px -1px rgba(0, 0, 0, 0.02),
@@ -53,4 +54,54 @@
 .types-container ul li,
 .body-container ul li {
   text-align: start;
+}
+
+.close-button {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  vertical-align: middle;
+
+  border-radius: 0px;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* close button */
+
+.close-button::before,
+.close-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 4px;
+  background-color: #000;
+  transform-origin: center;
+}
+
+.close-button::before {
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.close-button::after {
+  transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+}
+
+.close-button:hover {
+  transform: scale(1.1);
+}
+
+.close-button:active {
+  transform: scale(0.9);
 }

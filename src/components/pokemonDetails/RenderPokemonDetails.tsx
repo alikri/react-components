@@ -1,5 +1,7 @@
 import { Pokemon } from 'pokenode-ts';
 import { capitalize } from '../../utils/utils';
+import { useContext } from 'react';
+import { RightSideContext } from '../../context/context';
 
 interface PokemonDetailsProps {
   pokemonDetails: Pokemon | null;
@@ -8,8 +10,17 @@ interface PokemonDetailsProps {
 const RenderPokemonDetails = ({ pokemonDetails }: PokemonDetailsProps) => {
   const imageUrl = pokemonDetails && pokemonDetails.sprites.other?.['official-artwork']['front_default'];
   const pokemonNameToDisplay = pokemonDetails && capitalize(pokemonDetails.name);
+
+  const context = useContext(RightSideContext);
+  const { hideRightSide } = context;
+
+  const closeRightSection = () => {
+    hideRightSide(false);
+  };
+
   return (
-    <div className="pokemon-details">
+    <div className="pokemon-details" onClick={closeRightSection}>
+      <button className="close-button"></button>
       {imageUrl && <img src={imageUrl} alt={'pokemon abilities'} />}
       {pokemonDetails && <h2>{pokemonNameToDisplay}</h2>}
       <p>This is a great Pokemon with name {pokemonNameToDisplay} 👻</p>
