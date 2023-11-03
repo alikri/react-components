@@ -24,5 +24,9 @@
 .right-panel {
   width: 50%;
   border-left: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow-y: auto;
+  max-height: 100vh;
 }

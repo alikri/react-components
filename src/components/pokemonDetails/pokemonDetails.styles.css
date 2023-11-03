@@ -1,0 +1,14 @@
+.pokemon-details {
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.03),
+    0 1px 6px -1px rgba(0, 0, 0, 0.02),
+    0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  background-color: white;
+  border-radius: 10px;
+  margin-block: 20px;
+  cursor: pointer;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  text-align: center;
+}
