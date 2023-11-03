@@ -1,0 +1,11 @@
+.error-boundary-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
+.error-boundary-wrapper h1 {
+  margin: 0;
+  margin-right: 20px;
+}
