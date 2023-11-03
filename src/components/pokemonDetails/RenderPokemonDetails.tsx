@@ -5,6 +5,7 @@ import { RightSideContext } from '../../context/context';
 
 //utils
 import { capitalize } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface PokemonDetailsProps {
   pokemonDetails: Pokemon | null;
@@ -12,14 +13,22 @@ interface PokemonDetailsProps {
 }
 
 const RenderPokemonDetails = ({ pokemonDetails, pokemonSpecies }: PokemonDetailsProps) => {
+  const navigate = useNavigate();
+
   const imageUrl = pokemonDetails && pokemonDetails.sprites.other?.['official-artwork']['front_default'];
   const pokemonNameToDisplay = pokemonDetails && capitalize(pokemonDetails.name);
 
   const context = useContext(RightSideContext);
   const { hideRightSide } = context;
 
+  const navigateBack = () => {
+    const currentSearchParams = window.location.search;
+    navigate(`/${currentSearchParams}`);
+  };
+
   const closeRightSection = () => {
     hideRightSide();
+    navigateBack();
   };
 
   return (

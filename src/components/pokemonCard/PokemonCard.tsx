@@ -20,7 +20,9 @@ export const PokemonCard = ({ pokemon }: PokemonObject) => {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/details-${pokemon.name}`);
+    const currentSearchParams = window.location.search;
+
+    navigate(`/details-${pokemon.name}${currentSearchParams}`);
     showRightSide();
   };
 

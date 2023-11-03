@@ -1,6 +1,6 @@
 import './mainContent.styles.css';
 import { useState, useEffect, useContext } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 // Components
 import { Loader } from '../loader/Loader';
@@ -24,6 +24,8 @@ interface PokemonItem {
 }
 
 export const MainContent = () => {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -136,10 +138,16 @@ export const MainContent = () => {
     setCauseRenderError(true);
   };
 
+  const navigateBack = () => {
+    const currentSearchParams = window.location.search;
+    navigate(`/${currentSearchParams}`);
+  };
+
   const handleLeftSideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.closest('.left-panel') && !target.closest('.pokemon-card')) {
       hideRightSide();
+      navigateBack();
     }
   };
 

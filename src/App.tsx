@@ -16,7 +16,7 @@ export const App = () => {
       <ErrorBoundary onResetError={onResetError}>
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="/:pokemonName" element={<PokemonDetails />} />
+            <Route path=":pokemonName" element={<PokemonDetails />} />
           </Route>
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>
