@@ -10,6 +10,12 @@
   transition:
     box-shadow 0.3s ease,
     transform 0.3s ease;
+  text-align: center;
+}
+
+.pokemon-card-sm {
+  max-width: 320px;
+  max-height: 460px;
 }
 
 .pokemon-card:hover {
@@ -21,4 +27,15 @@
   max-width: 400px;
   max-height: auto;
   margin: 10px;
+}
+
+.pokemon-card-sm img {
+  max-width: 300px;
+  max-height: auto;
+  margin: 10px;
+}
+
+.pokemon-card-sm p {
+  max-width: 300px;
+  margin-top: 0px;
 }
