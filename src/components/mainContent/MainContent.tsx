@@ -129,10 +129,10 @@ export const MainContent = () => {
           image: pokeImage || '',
         },
       ]);
-      setLoading(false);
     } catch {
-      setLoading(false);
       setPokemonError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
