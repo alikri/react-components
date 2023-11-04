@@ -75,11 +75,11 @@ const RenderPokemonDetails = ({ pokemonDetails, pokemonSpecies }: PokemonDetails
             </li>
             <li>
               <span className="bold-text">environment: </span>
-              {pokemonSpecies ? <span> {capitalize(pokemonSpecies.habitat.name)}</span> : <span>Unknown</span>}
+              {pokemonSpecies ? <span> {pokemonSpecies.habitat.name}</span> : <span>Unknown</span>}
             </li>
             <li>
-              <span className="bold-text">environment: </span>
-              {pokemonSpecies ? <span> {capitalize(pokemonSpecies.habitat.name)}</span> : <span>Unknown</span>}
+              <span className="bold-text">shape: </span>
+              {pokemonSpecies ? <span> {pokemonSpecies.shape.name}</span> : <span>Unknown</span>}
             </li>
           </ul>
         </div>
