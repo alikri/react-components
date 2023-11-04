@@ -3,23 +3,23 @@ import './pokemonsList.styles.css';
 import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
 import { RightSideContext } from '../../context/context';
 import { useContext } from 'react';
+import { RequestErrors } from '../mainContent/MainContent';
 
 interface ResultsProps {
   pokemons: PokemonItem[];
-  pokemonError: boolean;
-  pokemonsError: boolean;
+  requestErrors: RequestErrors;
   currentPage: number;
 }
 
-export const PokemonsList = ({ pokemons, pokemonError, pokemonsError }: ResultsProps) => {
+export const PokemonsList = ({ pokemons, requestErrors }: ResultsProps) => {
   const context = useContext(RightSideContext);
   const { rightSide } = context;
 
-  if (pokemonError) {
+  if (requestErrors.pokemonRequestError) {
     return <h2>Pokemon with this name does not exist</h2>;
   }
 
-  if (pokemonsError) {
+  if (requestErrors.pokemonListRequestError) {
     return <h2>Failed to fetch Pokemons list</h2>;
   }
 

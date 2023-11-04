@@ -24,6 +24,11 @@ interface PokemonItem {
   image: string;
 }
 
+export interface RequestErrors {
+  pokemonListRequestError: boolean;
+  pokemonRequestError: boolean;
+}
+
 export const MainContent = () => {
   const navigate = useNavigate();
 
@@ -32,9 +37,12 @@ export const MainContent = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [pokemons, setPokemons] = useState<PokemonItem[]>([]);
 
+  const [requestErrors, setRequestErrors] = useState<RequestErrors>({
+    pokemonListRequestError: false,
+    pokemonRequestError: false,
+  });
+
   const [causeRenderError, setCauseRenderError] = useState<boolean>(false);
-  const [pokemonError, setPokemonError] = useState<boolean>(false);
-  const [pokemonsError, setPokemonsError] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -68,8 +76,7 @@ export const MainContent = () => {
 
   const getPokemons = async (): Promise<void> => {
     setLoading(true);
-    setPokemonError(false);
-    setPokemonsError(false);
+    setRequestErrors({ pokemonListRequestError: false, pokemonRequestError: false });
 
     const currentOffset = (page - 1) * limit;
 
@@ -83,10 +90,13 @@ export const MainContent = () => {
         const pokemonsData = await fetchAllPokemons(data.results);
         setPokemons(pokemonsData);
       } else {
-        setPokemonsError(true);
+        throw new Error('No pokemons are found');
       }
     } catch {
-      setPokemonsError(true);
+      setRequestErrors((prevErrors) => ({
+        ...prevErrors,
+        pokemonListError: true,
+      }));
     } finally {
       setLoading(false);
     }
@@ -108,11 +118,14 @@ export const MainContent = () => {
 
   const getPokemon = async (term: string): Promise<void> => {
     setLoading(true);
-    setPokemonError(false);
-    setPokemonsError(false);
+
+    setRequestErrors({ pokemonListRequestError: false, pokemonRequestError: false });
 
     if (isConvertibleToInt(term)) {
-      setPokemonError(true);
+      setRequestErrors((prevErrors) => ({
+        ...prevErrors,
+        pokemonRequestError: true,
+      }));
       return setLoading(false);
     }
 
@@ -120,17 +133,24 @@ export const MainContent = () => {
 
     try {
       const pokemonFromClient = await pokemonApi.getPokemonByName(nameToSearch);
-      const pokeImage = pokemonFromClient.sprites.other?.['official-artwork']['front_default'];
+      const pokemonImage = pokemonFromClient.sprites.other?.['official-artwork']['front_default'];
 
-      setPokemons([
-        {
-          name: nameToSearch,
-          description: `This is a great Pokemon with name ${capitalize(term)} 👻`,
-          image: pokeImage || '',
-        },
-      ]);
+      if (pokemonImage) {
+        setPokemons([
+          {
+            name: nameToSearch,
+            description: `This is a great Pokemon with name ${capitalize(term)} 👻`,
+            image: pokemonImage,
+          },
+        ]);
+      } else {
+        throw new Error('No pokemon image is found');
+      }
     } catch {
-      setPokemonError(true);
+      setRequestErrors((prevErrors) => ({
+        ...prevErrors,
+        pokemonRequestError: true,
+      }));
     } finally {
       setLoading(false);
     }
@@ -172,12 +192,7 @@ export const MainContent = () => {
             <>
               <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(DEFAULT_PAGE)} />
               <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
-              <PokemonsList
-                pokemons={pokemons}
-                pokemonError={pokemonError}
-                pokemonsError={pokemonsError}
-                currentPage={page}
-              />
+              <PokemonsList pokemons={pokemons} requestErrors={requestErrors} currentPage={page} />
             </>
           )}
         </div>
