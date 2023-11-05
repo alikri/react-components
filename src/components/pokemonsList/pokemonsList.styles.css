@@ -1,0 +1,15 @@
+.pokemons {
+  width: 1310px;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+}
+
+.pokemons-sm {
+  width: 100%;
+  margin-inline: 10px;
+  justify-content: center;
+  max-height: calc(100vh - 250px);
+  overflow-y: scroll;
+}

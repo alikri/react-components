@@ -1,0 +1,33 @@
+.search-section {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.results-section {
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-content-container {
+  display: flex;
+}
+
+.left-panel {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.right-panel {
+  width: 50%;
+  border-left: 1px solid #ccc;
+  margin-block: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 100vh;
+}

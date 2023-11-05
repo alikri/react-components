@@ -1,0 +1,30 @@
+.root {
+  margin: 0 auto;
+  text-align: center;
+  height: 100%;
+}
+
+button {
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+  width: 130px;
+  border: 1px solid black;
+}
+
+.error-button-wrapper {
+  align-self: flex-end;
+}
+
+.error-button {
+  color: rgba(255, 0, 0, 0.88);
+  border-color: rgba(255, 0, 0, 0.88);
+  transition: all 0.2 linear;
+}
+
+.error-button:hover {
+  color: rgb(145, 17, 17);
+  border-color: rgb(145, 17, 17);
+}
+
+.error-button:active {
+  box-shadow: 10px rgb(145, 17, 17);
+}
