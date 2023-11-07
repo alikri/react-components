@@ -28,3 +28,6 @@ coverage
 
 #vscode
 .vscode
+
+react-task1/junit.xml
+junit.xml
