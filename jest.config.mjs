@@ -20,7 +20,6 @@ const config = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/', '<rootDir>/.husky/'],
   testEnvironment: 'jsdom',
   transform: {
-    // transform files with ts-jest
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
