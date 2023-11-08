@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { Pokemon, PokemonSpecies } from 'pokenode-ts';
 
-import { RightSideContext } from '../../context/context';
+import { RightSideContext } from '../../context/rightSideContext';
 
-//utils
 import { capitalize } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 

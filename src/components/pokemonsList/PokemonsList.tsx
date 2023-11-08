@@ -1,7 +1,7 @@
 import './pokemonsList.styles.css';
 
 import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
-import { RightSideContext } from '../../context/context';
+import { RightSideContext } from '../../context/rightSideContext';
 import { useContext } from 'react';
 import { RequestErrors } from '../mainContent/MainContent';
 

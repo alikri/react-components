@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { PokemonCard } from './PokemonCard';
-import { RightSideContext } from '../../context/context';
+import { RightSideContext } from '../../context/rightSideContext';
 
 const pokemon = {
   name: 'test name',
