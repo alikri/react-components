@@ -1,19 +1,19 @@
 import './pokemonsList.styles.css';
 
-import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
+import { PokemonCard } from '../pokemonCard/PokemonCard';
 import { RightSideContext } from '../../context/rightSideContext';
 import { useContext } from 'react';
 import { RequestErrors } from '../mainContent/MainContent';
+import { PokemonDataContext } from '../../context/pokemonDataContext';
 
 interface ResultsProps {
-  pokemons: PokemonItem[];
   requestErrors: RequestErrors;
   currentPage: number;
 }
 
-export const PokemonsList = ({ pokemons, requestErrors }: ResultsProps) => {
-  const context = useContext(RightSideContext);
-  const { rightSide } = context;
+export const PokemonsList = ({ requestErrors }: ResultsProps) => {
+  const { rightSide } = useContext(RightSideContext);
+  const { pokemons } = useContext(PokemonDataContext);
 
   if (requestErrors.pokemonRequestError) {
     return <h2>Pokemon with this name does not exist</h2>;

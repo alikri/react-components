@@ -21,8 +21,8 @@ export interface RequestErrors {
 
 export const MainContent = () => {
   const navigate = useNavigate();
-  const { pokemons, loading, requestErrors, getPokemons, getPokemon, totalItems } = useContext(PokemonDataContext);
-  const context = useContext(RightSideContext);
+  const { loading, requestErrors, getPokemons, getPokemon } = useContext(PokemonDataContext);
+  const { rightSide, hideRightSide, showRightSide } = useContext(RightSideContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -34,8 +34,6 @@ export const MainContent = () => {
 
   const [page, setPage] = useState<number>(initialPage);
   const [limit, setLimit] = useState<number>(initialLimit);
-
-  const { rightSide, hideRightSide, showRightSide } = context;
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -90,8 +88,8 @@ export const MainContent = () => {
           ) : (
             <>
               <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(DEFAULT_PAGE)} />
-              <Paginator page={page} limit={limit} totalItems={totalItems} onPageChange={setPage} />
-              <PokemonsList pokemons={pokemons} requestErrors={requestErrors} currentPage={page} />
+              <Paginator page={page} limit={limit} onPageChange={setPage} />
+              <PokemonsList requestErrors={requestErrors} currentPage={page} />
             </>
           )}
         </div>
