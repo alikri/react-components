@@ -1,10 +1,13 @@
 import { MainContent } from '../components/mainContent/MainContent';
-import { RightSideProvider } from '../context/context';
+import { PokemonDataProvider } from '../context/pokemonDataContext';
+import { RightSideProvider } from '../context/rightSideContext';
 
 export const Home = () => {
   return (
     <RightSideProvider>
-      <MainContent />
+      <PokemonDataProvider>
+        <MainContent />
+      </PokemonDataProvider>
     </RightSideProvider>
   );
 };
