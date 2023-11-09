@@ -128,17 +128,21 @@ export const PokemonDataProvider = ({ children }: PokemonProviderProps) => {
     }
   };
 
-  const value = {
-    pokemons,
-    setPokemons,
-    loading,
-    setLoading,
-    requestErrors,
-    setRequestErrors,
-    getPokemons,
-    getPokemon,
-    totalItems,
-  };
-
-  return <PokemonDataContext.Provider value={value}>{children}</PokemonDataContext.Provider>;
+  return (
+    <PokemonDataContext.Provider
+      value={{
+        pokemons,
+        setPokemons,
+        loading,
+        setLoading,
+        requestErrors,
+        setRequestErrors,
+        getPokemons,
+        getPokemon,
+        totalItems,
+      }}
+    >
+      {children}
+    </PokemonDataContext.Provider>
+  );
 };

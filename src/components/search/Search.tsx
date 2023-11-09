@@ -1,14 +1,15 @@
 import './search.styles.css';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { loadFromLocalStorage, storeInLocalStorage } from '../../localStorage/localStorage';
+import { SearchContext } from '../../context/searchQueryContext';
 
 interface SearchProps {
-  searchTerm: string;
   causeRenderError: boolean;
   onInputChange: (term: string) => void;
 }
 
-export const Search = ({ searchTerm, causeRenderError, onInputChange }: SearchProps) => {
+export const Search = ({ causeRenderError, onInputChange }: SearchProps) => {
+  const { searchTerm } = useContext(SearchContext);
   const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
