@@ -14,6 +14,7 @@
 
 .main-content-container {
   display: flex;
+  overflow-x: hidden;
 }
 
 .left-panel {

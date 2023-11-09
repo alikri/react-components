@@ -13,6 +13,7 @@ import { loadFromLocalStorage } from '../../localStorage/localStorage';
 import { RightSideContext } from '../../context/rightSideContext';
 import { DEFAULT_PAGE } from '../../constants/constants';
 import { PokemonDataContext } from '../../context/pokemonDataContext';
+import { SearchContext } from '../../context/searchQueryContext';
 
 export interface RequestErrors {
   pokemonListRequestError: boolean;
@@ -23,10 +24,9 @@ export const MainContent = () => {
   const navigate = useNavigate();
   const { loading, requestErrors, getPokemons, getPokemon } = useContext(PokemonDataContext);
   const { rightSide, hideRightSide, showRightSide } = useContext(RightSideContext);
-
+  const { setSearchTerm } = useContext(SearchContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const [causeRenderError, setCauseRenderError] = useState<boolean>(false);
 
   const initialPage = parseInt(searchParams.get('page') || '1', 10);
@@ -79,7 +79,7 @@ export const MainContent = () => {
     <div className="main-content-container" onClick={(e) => handleLeftSideClick(e)}>
       <section className="left-panel">
         <div className="search-section">
-          <Search causeRenderError={causeRenderError} searchTerm={searchTerm} onInputChange={onInputChange} />
+          <Search causeRenderError={causeRenderError} onInputChange={onInputChange} />
           <ErrorButton triggerError={triggerError} />
         </div>
         <div className="results-section">
