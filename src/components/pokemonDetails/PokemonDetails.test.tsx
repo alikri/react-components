@@ -28,7 +28,7 @@ describe('PokemonDetails Component', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTestId('custom-element')).toBeInTheDocument();
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('PokemonDetails Component', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTestId('custom-element')).toBeInTheDocument();
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('Error fetching details or details not available.')).toBeInTheDocument();
