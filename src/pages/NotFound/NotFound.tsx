@@ -11,7 +11,7 @@ export const NotFound = () => {
   return (
     <div className="not-found-container">
       <h1>404</h1>
-      <p>Page Not Found</p>
+      <h2>Page Not Found</h2>
       <button onClick={goHome}>Go Home</button>
     </div>
   );
