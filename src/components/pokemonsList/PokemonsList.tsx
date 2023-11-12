@@ -1,19 +1,18 @@
 import './pokemonsList.styles.css';
 
-import { PokemonCard, PokemonItem } from '../pokemonCard/PokemonCard';
-import { RightSideContext } from '../../context/context';
+import { PokemonCard } from '../pokemonCard/PokemonCard';
+import { RightSideContext } from '../../context/rightSideContext';
 import { useContext } from 'react';
 import { RequestErrors } from '../mainContent/MainContent';
+import { PokemonDataContext } from '../../context/pokemonDataContext';
 
-interface ResultsProps {
-  pokemons: PokemonItem[];
+export interface ResultsProps {
   requestErrors: RequestErrors;
-  currentPage: number;
 }
 
-export const PokemonsList = ({ pokemons, requestErrors }: ResultsProps) => {
-  const context = useContext(RightSideContext);
-  const { rightSide } = context;
+export const PokemonsList = ({ requestErrors }: ResultsProps) => {
+  const { rightSide } = useContext(RightSideContext);
+  const { pokemons } = useContext(PokemonDataContext);
 
   if (requestErrors.pokemonRequestError) {
     return <h2>Pokemon with this name does not exist</h2>;
@@ -24,7 +23,7 @@ export const PokemonsList = ({ pokemons, requestErrors }: ResultsProps) => {
   }
 
   return (
-    <div className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
+    <div data-testid="pokemon-list-wrapper" className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
       {pokemons.map((pokemon, index) => (
         <PokemonCard key={`${pokemon.name}${index}`} pokemon={pokemon} />
       ))}

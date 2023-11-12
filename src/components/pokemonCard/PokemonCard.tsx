@@ -3,7 +3,7 @@ import './pokemonCard.styles.css';
 import { useNavigate } from 'react-router-dom';
 
 import { capitalize } from '../../utils/utils';
-import { RightSideContext } from '../../context/context';
+import { RightSideContext } from '../../context/rightSideContext';
 import { useContext } from 'react';
 export interface PokemonItem {
   name: string;

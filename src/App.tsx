@@ -2,8 +2,8 @@ import './App.css';
 import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary';
 import { PokemonDetails } from './components/pokemonDetails/PokemonDetails';
 import { Home } from './pages/Home';
+import { NotFound } from './pages/NotFound/NotFound';
 
-//react=router imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 export const App = () => {
@@ -18,7 +18,7 @@ export const App = () => {
           <Route path="/" element={<Home />}>
             <Route path=":pokemonName" element={<PokemonDetails />} />
           </Route>
-          <Route path="*" element={<div>Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
     </Router>

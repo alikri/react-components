@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+coverage
+*.lcov
+
+#vscode
+.vscode
+
+react-task1/junit.xml
+junit.xml

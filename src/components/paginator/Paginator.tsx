@@ -1,13 +1,16 @@
+import { PokemonDataContext } from '../../context/pokemonDataContext';
 import './paginator.styles.css';
+
+import { useContext } from 'react';
 
 interface PaginatorProps {
   page: number;
   limit: number;
-  totalItems: number;
   onPageChange: (newPage: number) => void;
 }
 
-export const Paginator = ({ page, limit, totalItems, onPageChange }: PaginatorProps) => {
+export const Paginator = ({ page, limit, onPageChange }: PaginatorProps) => {
+  const { totalItems } = useContext(PokemonDataContext);
   const totalPages = Math.ceil(totalItems / limit);
 
   const handlePrevious = () => {
