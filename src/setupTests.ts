@@ -8,3 +8,5 @@ afterAll(() => {
   server.resetHandlers();
   server.close();
 });
+
+export default server;

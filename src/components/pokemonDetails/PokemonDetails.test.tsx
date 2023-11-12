@@ -30,11 +30,24 @@ describe('PokemonDetails Component', () => {
 
     expect(screen.getByTestId('custom-element')).toBeInTheDocument();
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-      },
-      { timeout: 2000 },
+    await waitFor(() => {
+      expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
+    });
+  });
+
+  it('invalid test data', async () => {
+    mockedUseParams.mockReturnValue({ pokemonName: 'details-unknownpokemon' });
+
+    render(
+      <MemoryRouter>
+        <PokemonDetails />
+      </MemoryRouter>,
     );
+
+    expect(screen.getByTestId('custom-element')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText('Error fetching details or details not available.')).toBeInTheDocument();
+    });
   });
 });
