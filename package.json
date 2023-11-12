@@ -13,7 +13,7 @@
     "format:fix": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx,css}\" --write",
     "format": "prettier --config .prettierrc.cjs \"**/*.{ts,tsx,css}\" --check",
     "prepare": "husky install",
-    "pre-commit": "npm run format && npm run lint"
+    "pre-commit": "npm run format && npm run lint && npm run test"
   },
   "dependencies": {
     "axios": "^1.6.0",
