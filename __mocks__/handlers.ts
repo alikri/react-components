@@ -1,15 +1,23 @@
 import { http, HttpResponse } from 'msw';
-
-export const mainUrl = 'https://pokeapi.co/api/v2/pokemon';
+import { MAIN_URL } from '../src/constants/constants';
 
 export const handlers = [
-  http.get(`${mainUrl}`, () => {
+  http.get(`${MAIN_URL}`, () => {
+    return HttpResponse.json([
+      {
+        name: 'Bulbasaur',
+        id: 1,
+      },
+      { name: 'Ivysaur', id: 2 },
+    ]);
+  }),
+  http.get(`${MAIN_URL}/bulbasaur`, () => {
     return HttpResponse.json({
       name: 'Bulbasaur',
       id: 1,
     });
   }),
-  http.get(`${mainUrl}/unknownpokemon`, () => {
+  http.get(`${MAIN_URL}/unknownpokemon`, () => {
     return new HttpResponse('no such pokemon', { status: 404 });
   }),
 ];
