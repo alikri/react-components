@@ -1,0 +1,32 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.not-found-container h1 {
+  font-size: 5rem;
+  color: #ff6b6b;
+}
+
+.not-found-container p {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.not-found-container a {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4ecdc4;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.not-found-container a:hover {
+  background-color: #3bb2b8;
+}
