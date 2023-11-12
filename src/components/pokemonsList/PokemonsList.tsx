@@ -6,9 +6,8 @@ import { useContext } from 'react';
 import { RequestErrors } from '../mainContent/MainContent';
 import { PokemonDataContext } from '../../context/pokemonDataContext';
 
-interface ResultsProps {
+export interface ResultsProps {
   requestErrors: RequestErrors;
-  currentPage: number;
 }
 
 export const PokemonsList = ({ requestErrors }: ResultsProps) => {
@@ -24,7 +23,7 @@ export const PokemonsList = ({ requestErrors }: ResultsProps) => {
   }
 
   return (
-    <div className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
+    <div data-testid="pokemon-list-wrapper" className={rightSide ? 'pokemons pokemons-sm' : 'pokemons'}>
       {pokemons.map((pokemon, index) => (
         <PokemonCard key={`${pokemon.name}${index}`} pokemon={pokemon} />
       ))}

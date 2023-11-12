@@ -6,9 +6,10 @@ export const handlers = [
     return HttpResponse.json([
       {
         name: 'Bulbasaur',
-        id: 1,
+        description: '...',
+        image: '...',
       },
-      { name: 'Ivysaur', id: 2 },
+      { name: 'Ivysaur', description: '...', image: '...' },
     ]);
   }),
   http.get(`${MAIN_URL}/bulbasaur`, () => {

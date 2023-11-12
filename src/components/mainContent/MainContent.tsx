@@ -89,7 +89,7 @@ export const MainContent = () => {
             <>
               <PageLimit limit={limit} onLimitChange={setLimit} onPageReset={() => setPage(DEFAULT_PAGE)} />
               <Paginator page={page} limit={limit} onPageChange={setPage} />
-              <PokemonsList requestErrors={requestErrors} currentPage={page} />
+              <PokemonsList requestErrors={requestErrors} />
             </>
           )}
         </div>

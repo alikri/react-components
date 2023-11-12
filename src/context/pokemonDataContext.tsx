@@ -9,7 +9,7 @@ interface PokemonProviderProps {
   children: React.ReactNode;
 }
 
-interface PokemonProps {
+export interface PokemonProps {
   pokemons: PokemonItem[];
   setPokemons: React.Dispatch<React.SetStateAction<PokemonItem[]>>;
   loading: boolean;
