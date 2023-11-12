@@ -34,7 +34,6 @@ export const PokemonDetails = () => {
           setLoading(false);
         } catch {
           setLoading(false);
-          console.error('Failed to fetch Pokémon details.');
         }
       }
     };
